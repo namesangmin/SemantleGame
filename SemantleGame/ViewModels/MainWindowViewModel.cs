@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
+using SemantleGame.Services;
+using SemantleGame.Models;
+
 namespace SemantleGame.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
@@ -17,10 +20,14 @@ namespace SemantleGame.ViewModels
             }
         }
 
-        public MainWindowViewModel()
+        IFileService _fileReader;
+
+        public MainWindowViewModel(IFileService fileReader)
         {
             // 시작 화면
             CurrentViewModel = new StartViewModel(this);
+
+            _fileReader = fileReader;
         }
 
         public void Navigate(ViewModelBase vm)

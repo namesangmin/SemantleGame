@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using SemantleGame.Services;
 using SemantleGame.ViewModels;
 
 namespace SemantleGame.Views
@@ -22,6 +22,10 @@ namespace SemantleGame.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new MainWindowViewModel(
+                new FileService()
+            );
         }
     }
 }
