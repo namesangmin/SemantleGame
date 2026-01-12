@@ -4,6 +4,7 @@ using System.Text;
 
 using SemantleGame.Services;
 using SemantleGame.Models;
+using System.Windows.Shapes;
 
 namespace SemantleGame.ViewModels
 {
@@ -20,14 +21,23 @@ namespace SemantleGame.ViewModels
             }
         }
 
-        IFileService _fileReader;
-
-        public MainWindowViewModel(IFileService fileReader)
+        //IFileService _fileReader;
+        Dictionary<string, WordModel> dic;
+        public MainWindowViewModel()
         {
+            WordVectorService vectorService = new WordVectorService();
+            AnswerWordsService answerService = new AnswerWordsService();
+
+            Dictionary<string, WordModel> wordDic = vectorService.getWordVectors();
+            string? ans = answerService.getAnswerWord();
+
             // 시작 화면
             CurrentViewModel = new StartViewModel(this);
 
-            _fileReader = fileReader;
+
+            //_fileReader = fileReader;
+
+
         }
 
         public void Navigate(ViewModelBase vm)

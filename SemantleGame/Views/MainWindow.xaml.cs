@@ -23,9 +23,7 @@ namespace SemantleGame.Views
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel(
-                new FileService()
-            );
+            DataContext = new MainWindowViewModel();
         }
     }
 }
