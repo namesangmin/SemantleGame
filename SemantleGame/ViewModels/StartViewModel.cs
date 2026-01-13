@@ -100,6 +100,10 @@ namespace SemantleGame.ViewModels
 
             // 객체를 생성하기 전에 확인이 필요함 =>
             // 1. 예외인지?
+            if (InputWord.Length == 0)
+            {
+                return;
+            }
             if (!_WordDic.ContainsKey(InputWord))
             {
                 // 위에 레이블로 떠야 함 -> 임시

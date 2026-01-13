@@ -12,7 +12,7 @@ namespace SemantleGame.Services
 
         public string getAnswerWord()
         {
-            string path = "word_preprocessing.txt";
+            string path = "filtered_answers.txt";
 
             string[] wordLines = File.ReadAllLines(path);
             if (wordLines.Length == 0) return "";
