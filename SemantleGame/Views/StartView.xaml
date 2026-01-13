@@ -29,10 +29,12 @@
                 <Grid Grid.Row="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Height="Auto" VerticalAlignment="Top"
+                                 Margin="10"
                                  materialDesign:HintAssist.Hint="Guess the word"
                                  
                                  Text="{Binding InputWord}"
@@ -42,21 +44,17 @@
                                 <!--if method needed : TextChanged="TextBox_TextChanged"-->
                         <Button Command="{Binding SubmitCommand}" 
                                 Grid.Column="1" Content="_Submit" 
-                                VerticalAlignment="Stretch"
+                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                Height="50" Width="100"
+                                Margin="10,0"
                                 Style="{StaticResource MaterialDesignRaisedDarkButton}">
-                            <!--<Button.CommandParameter>
-                                <StackPanel Margin="20">
-                                    <materialDesign:PackIcon Kind="CheckCircle" Width="50" Height="50" 
-                                                         HorizontalAlignment="Center" Foreground="Green" Margin="0,0,0,10"/>
-                                    <TextBlock Text="Correct! 🎉" HorizontalAlignment="Center" 
-                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,20"/>
-
-                                    <Button Content="Ok"
-                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                        HorizontalAlignment="Center" 
-                                        Style="{StaticResource MaterialDesignFlatButton}"/>
-                                </StackPanel>
-                            </Button.CommandParameter>-->
+                        </Button>
+                        <Button Command="{Binding AnswerCommand}" 
+                                Grid.Column="2" Content="겁쟁이" 
+                                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                Height="50" Width="100"
+                                Margin="10,0"
+                                Style="{StaticResource MaterialDesignOutlinedLightButton}">
                         </Button>
                     </Grid>
                 </Grid>

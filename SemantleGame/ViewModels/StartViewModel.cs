@@ -13,15 +13,6 @@ namespace SemantleGame.ViewModels
 {
     public class StartViewModel : ViewModelBase
     {
-        private ObservableCollection<SubmittedWordViewModel> _submittedWords = new ObservableCollection<SubmittedWordViewModel>()
-        {
-            new SubmittedWordViewModel(1, "test", 0.0f, 500),
-        };
-
-        public ObservableCollection<SubmittedWordViewModel> SubmittedWords
-        {
-            get { return _submittedWords; } 
-        }
 
         private readonly MainWindowViewModel _mainViewMode;
         public ObservableCollection<UserLogModel> InputHistory { get; set; }
@@ -30,6 +21,11 @@ namespace SemantleGame.ViewModels
         private string _Ans = "";
 
         public ICommand SubmitCommand
+        {
+            get;
+        }
+
+        public ICommand AnswerCommand
         {
             get;
         }
@@ -61,7 +57,8 @@ namespace SemantleGame.ViewModels
             PreCalculateRanks();
 
             SubmitCommand = new RelayCommand(_=>SubmitButtonClicked());
-            
+            AnswerCommand = new RelayCommand(_=>AnswerButtonClicked());
+
             // 사용자 입력 로그
             InputHistory = new ObservableCollection<UserLogModel>();
 
@@ -74,16 +71,14 @@ namespace SemantleGame.ViewModels
             // 올바른 제네릭 타입 사용: Tuple<string, float> 또는 ValueTuple<string, float>
             WordModel targetModel = _WordDic[_Ans];
             var tm = new List<(string word, float score)>();
-            int idx = 0;
             foreach(var item in _WordDic)
             {
-                if (idx > 1000) break;
                 float sim = CalculateCos(targetModel, item.Value);
                 tm.Add((item.Key, sim));
-                idx++;
             }
 
             var sortedList = tm.OrderByDescending(x => x.score).ToList();
+            sortedList = sortedList.Slice(0, 1000);
             for(int i=0; i< sortedList.Count; i++)
             {
                 _RankingMap[sortedList[i].word] = i + 1;
@@ -140,6 +135,11 @@ namespace SemantleGame.ViewModels
             UserLogModel user = new UserLogModel(cnt, InputWord, sim, rank);
             InputHistory.Add(user);
             InputWord = "";
+        }
+
+        public void AnswerButtonClicked()
+        {
+            MessageBox.Show($"정답 : {_Ans}");
         }
     }
 }
