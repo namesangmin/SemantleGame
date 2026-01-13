@@ -20,14 +20,11 @@ namespace SemantleGame.ViewModels
             }
         }
 
-        IFileService _fileReader;
-
         public MainWindowViewModel(IFileService fileReader)
         {
             // 시작 화면
             CurrentViewModel = new StartViewModel(this);
 
-            _fileReader = fileReader;
         }
 
         public void Navigate(ViewModelBase vm)

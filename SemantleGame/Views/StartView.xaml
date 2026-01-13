@@ -12,7 +12,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <materialDesign:DialogHost Identifier="RootDialog" DialogTheme="Inherit">
         <Grid>
-            <Grid Width="400">
+            <Grid Width="500">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="auto"/>
@@ -34,9 +34,8 @@
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Height="Auto" VerticalAlignment="Top"
                                  materialDesign:HintAssist.Hint="Guess the word"
-                                 AcceptsReturn="True"
+                                 
                                  Text="{Binding InputWord}"
-                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
                                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" 
                                  />
@@ -63,12 +62,56 @@
                 </Grid>
 
                 <Grid Grid.Row="2">
-                    <DataGrid
-                        CanUserAddRows="False"
-                        ItemsSource="{Binding Items2}"
-                        SelectionMode="Extended"
-                        SelectionUnit="Cell" />
-                    
+                    <DataGrid ItemsSource="{Binding SubmittedWords}"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              HeadersVisibility="Column"
+                              Style="{StaticResource MaterialDesignDataGrid}">
+                        <DataGrid.Resources>
+                            <Style x:Key="CenterTextStyle" TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="TextAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Index"
+                            Binding="{Binding Index}"
+                            ElementStyle="{StaticResource CenterTextStyle}" />
+                            <DataGridTextColumn Header="Word"
+                            Binding="{Binding Word}"
+                            ElementStyle="{StaticResource CenterTextStyle}" />
+                            <DataGridTextColumn Header="Similarity"
+                            Binding="{Binding Similarity}"
+                            ElementStyle="{StaticResource CenterTextStyle}" />
+                            <DataGridTextColumn Header="Rank"
+                                    Binding="{Binding SimilarityRank}"
+                                    ElementStyle="{StaticResource CenterTextStyle}" />
+                            <DataGridTemplateColumn Header="Rank"
+                                Width="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ProgressBar
+                                            Minimum="0"
+                                            Maximum="1000"
+                                            Value="{Binding SimilarityRank}"
+                                            Height="20"
+                                            Margin="8,0" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </Grid>
         </Grid>
