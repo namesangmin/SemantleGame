@@ -5,28 +5,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SemantleGame.Views"
              xmlns:vm="clr-namespace:SemantleGame.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              Background="White"
              d:DataContext="{d:DesignInstance vm:StartViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid Width="400">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <materialDesign:DialogHost Identifier="RootDialog" DialogTheme="Inherit">
+        <Grid>
+            <Grid Width="400">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <TextBlock Text="Korean Semantic"
-                   FontSize="32" 
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center" FontWeight="Bold"/>
-            </Grid>
+                <Grid Grid.Row="0">
+                    <TextBlock Text="Korean Semantic"
+               FontSize="32" 
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center" FontWeight="Bold"/>
+                </Grid>
 
-            <Grid Grid.Row="2">
-                
+                <Grid Grid.Row="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Height="Auto" VerticalAlignment="Top"
+                                 x:Name="TextBox"
+                                 materialDesign:HintAssist.Hint="Guess the word"
+                                 AcceptsReturn="True"
+                                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" 
+                                 />
+                                <!--if method needed : TextChanged="TextBox_TextChanged"-->
+                        <Button Grid.Column="1" Content="_Submit" VerticalAlignment="Top"
+                                Height="{Binding ElementName=TextBox, Path=ActualHeight}"
+                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <Button.CommandParameter>
+                                <StackPanel Margin="20">
+                                    <materialDesign:PackIcon Kind="CheckCircle" Width="50" Height="50" 
+                                                         HorizontalAlignment="Center" Foreground="Green" Margin="0,0,0,10"/>
+                                    <TextBlock Text="Correct! 🎉" HorizontalAlignment="Center" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,20"/>
+
+                                    <Button Content="Ok"
+                                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                        HorizontalAlignment="Center" 
+                                        Style="{StaticResource MaterialDesignFlatButton}"/>
+                                </StackPanel>
+                            </Button.CommandParameter>
+                        </Button>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <DataGrid
+                CanUserAddRows="False"
+                ItemsSource="{Binding Items2}"
+                SelectionMode="Extended"
+                SelectionUnit="Cell" />
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </UserControl>
