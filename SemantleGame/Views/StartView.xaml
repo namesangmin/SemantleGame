@@ -33,21 +33,19 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Height="Auto" VerticalAlignment="Top"
-                                 x:Name="TextBox"
                                  materialDesign:HintAssist.Hint="Guess the word"
                                  AcceptsReturn="True"
+                                 Text="{Binding InputWord}"
                                  IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
                                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" 
                                  />
                                 <!--if method needed : TextChanged="TextBox_TextChanged"-->
-                        <Button Grid.Column="1" Content="_Submit" VerticalAlignment="Top"
-                                Height="{Binding ElementName=TextBox, Path=ActualHeight}"
-                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                                ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
-                                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                            <Button.CommandParameter>
+                        <Button Command="{Binding SubmitCommand}" 
+                                Grid.Column="1" Content="_Submit" 
+                                VerticalAlignment="Stretch"
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                            <!--<Button.CommandParameter>
                                 <StackPanel Margin="20">
                                     <materialDesign:PackIcon Kind="CheckCircle" Width="50" Height="50" 
                                                          HorizontalAlignment="Center" Foreground="Green" Margin="0,0,0,10"/>
@@ -59,17 +57,18 @@
                                         HorizontalAlignment="Center" 
                                         Style="{StaticResource MaterialDesignFlatButton}"/>
                                 </StackPanel>
-                            </Button.CommandParameter>
+                            </Button.CommandParameter>-->
                         </Button>
                     </Grid>
                 </Grid>
 
                 <Grid Grid.Row="2">
                     <DataGrid
-                CanUserAddRows="False"
-                ItemsSource="{Binding Items2}"
-                SelectionMode="Extended"
-                SelectionUnit="Cell" />
+                        CanUserAddRows="False"
+                        ItemsSource="{Binding Items2}"
+                        SelectionMode="Extended"
+                        SelectionUnit="Cell" />
+                    
                 </Grid>
             </Grid>
         </Grid>

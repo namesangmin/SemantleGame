@@ -21,6 +21,7 @@ namespace SemantleGame.Views
         public StartView()
         {
             InitializeComponent();
+
         }
     }
 }
